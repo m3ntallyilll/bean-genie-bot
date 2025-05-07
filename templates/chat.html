@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Bean-Genie Discord Bot CLI
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+      font-family: "Inter", sans-serif;
+    }
+  </style>
+ </head>
+ <body class="bg-gray-900 text-gray-100 min-h-screen flex flex-col">
+  <header class="bg-indigo-700 p-4 shadow-md flex items-center justify-center space-x-3">
+   <img alt="Bean-Genie logo, stylized genie lamp with sparkles" class="w-10 h-10" height="40" src="https://storage.googleapis.com/a1aa/image/7144e2c1-5a85-47c7-ef75-3e9ba6f8866d.jpg" width="40"/>
+   <h1 class="text-2xl font-semibold">
+    Bean-Genie Discord Bot (CLI Version)
+   </h1>
+  </header>
+  <main class="flex-grow p-4 max-w-4xl mx-auto w-full flex flex-col" role="main">
+   <section class="mb-6 text-center">
+    <p class="text-indigo-300 text-lg mb-2">
+     Use the buttons below to run commands or type your own command starting
+        with
+     <code class="bg-gray-800 px-1 rounded">
+      !
+     </code>
+     in the input box.
+    </p>
+   </section>
+   <section aria-atomic="true" aria-live="polite" class="flex flex-col bg-gray-800 rounded-lg shadow-lg p-4 h-[60vh] overflow-y-auto mb-4" id="cli-container">
+    <!-- CLI output will appear here -->
+   </section>
+   <section aria-label="Predefined command buttons" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 mb-4">
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!convert beans 1000" type="button">
+     <i class="fas fa-exchange-alt">
+     </i>
+     <span>
+      Convert Beans
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!track 10000 70" type="button">
+     <i class="fas fa-tachometer-alt">
+     </i>
+     <span>
+      Track Tier
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!events" type="button">
+     <i class="fas fa-calendar-alt">
+     </i>
+     <span>
+      Events
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!growth" type="button">
+     <i class="fas fa-chart-line">
+     </i>
+     <span>
+      Growth Tips
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!sponsorship" type="button">
+     <i class="fas fa-handshake">
+     </i>
+     <span>
+      Sponsorship
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!wishlist" type="button">
+     <i class="fas fa-list">
+     </i>
+     <span>
+      Wishlist
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!cross_promote" type="button">
+     <i class="fas fa-share-alt">
+     </i>
+     <span>
+      Cross Promote
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!loan_info" type="button">
+     <i class="fas fa-info-circle">
+     </i>
+     <span>
+      Loan Info
+     </span>
+    </button>
+    <button class="btn-command bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="!credit_score" type="button">
+     <i class="fas fa-star">
+     </i>
+     <span>
+      Credit Score
+     </span>
+    </button>
+    <button class="btn-command bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md px-4 py-2 flex items-center justify-center space-x-2 transition-colors duration-200" data-cmd="exit" type="button">
+     <i class="fas fa-sign-out-alt">
+     </i>
+     <span>
+      Exit
+     </span>
+    </button>
+   </section>
+   <form aria-label="Command input form" class="mt-2 flex flex-col sm:flex-row gap-2" id="cli-form">
+    <input aria-required="true" autocomplete="off" class="flex-grow rounded-md border border-gray-600 bg-gray-900 px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="cli-input" placeholder="Enter command here..." type="text"/>
+    <button aria-label="Submit command" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-md px-6 py-2 flex items-center justify-center transition-colors duration-200" type="submit">
+     <i class="fas fa-terminal mr-2">
+     </i>
+     Run
+    </button>
+   </form>
+  </main>
+  <footer class="bg-gray-800 text-gray-400 text-center p-3 text-sm">
+   © 2024 Bean-Genie Bot. Powered by Tailwind CSS and Font Awesome.
+  </footer>
+  <script>
+   const cliContainer = document.getElementById("cli-container");
+    const cliForm = document.getElementById("cli-form");
+    const cliInput = document.getElementById("cli-input");
+    const btnCommands = document.querySelectorAll(".btn-command");
+
+    // Scroll to bottom helper
+    function scrollToBottom() {
+      cliContainer.scrollTop = cliContainer.scrollHeight;
+    }
+
+    // Append message to CLI container
+    function appendMessage(content, isUser = false) {
+      const wrapper = document.createElement("div");
+      if (isUser) {
+        wrapper.className =
+          "text-indigo-400 mb-3 flex items-start space-x-2 break-words";
+        const icon = document.createElement("i");
+        icon.className = "fas fa-user-circle text-indigo-500 text-xl flex-shrink-0 mt-1";
+        wrapper.appendChild(icon);
+        const text = document.createElement("div");
+        text.textContent = content;
+        wrapper.appendChild(text);
+      } else {
+        wrapper.className =
+          "bg-gray-700 rounded-md p-3 mb-3 whitespace-pre-wrap break-words";
+        wrapper.textContent = content;
+      }
+      cliContainer.appendChild(wrapper);
+      scrollToBottom();
+    }
+
+    // Command processing logic (mocked)
+    function processCommand(input) {
+      input = input.trim();
+      if (!input) return "Please enter a command.";
+
+      if (input.toLowerCase() === "exit") {
+        return "Goodbye! Thank you for using Bean-Genie.";
+      }
+
+      if (input.startsWith("!")) {
+        const parts = input.slice(1).split(" ");
+        const command = parts[0].toLowerCase();
+        const args = parts.slice(1);
+
+        switch (command) {
+          case "convert":
+            if (args.length < 2) {
+              return "Usage: !convert <type> <amount>\nExample: !convert beans 1000";
+            }
+            const type = args[0].toLowerCase();
+            const amount = parseFloat(args[1]);
+            if (isNaN(amount)) {
+              return "Amount must be a number.";
+            }
+            const conversionRates = {
+              beans: { diamonds: 2, usd: 0.05 },
+              diamonds: { beans: 0.5, usd: 0.025 },
+              usd: { beans: 20, diamonds: 40 },
+            };
+            if (!conversionRates[type]) {
+              return `Unknown conversion type: ${type}`;
+            }
+            const results = conversionRates[type];
+            let resStr = `${amount} ${type} converts to:\n`;
+            for (const [k, v] of Object.entries(results)) {
+              resStr += `- ${(amount * v).toFixed(2)} ${k}\n`;
+            }
+            return resStr.trim();
+
+          case "track":
+            if (args.length < 2) {
+              return "Usage: !track <beans> <hours>\nExample: !track 10000 70";
+            }
+            const beans = parseInt(args[0], 10);
+            const hours = parseInt(args[1], 10);
+            if (isNaN(beans) || isNaN(hours)) {
+              return "Beans and hours must be numbers.";
+            }
+            const tiers = [
+              { name: "Rookie", beans: 0, hours: 0 },
+              { name: "Explorer", beans: 5000, hours: 60 },
+              { name: "Rising Star", beans: 15000, hours: 80 },
+              { name: "Talent", beans: 30000, hours: 100 },
+              { name: "Professional", beans: 60000, hours: 120 },
+              { name: "Elite", beans: 100000, hours: 150 },
+              { name: "Champion", beans: 200000, hours: 180 },
+            ];
+            let currentTier = "Unranked";
+            for (let i = tiers.length - 1; i >= 0; i--) {
+              if (beans >= tiers[i].beans && hours >= tiers[i].hours) {
+                currentTier = tiers[i].name;
+                break;
+              }
+            }
+            return `With ${beans} beans and ${hours} hours, your tier is ${currentTier}.`;
+
+          case "events":
+            return `Current Events:
+- Summer Bash (Contest): Entry Fee 500 beans, Participants 12/20, Duration 5 days, Prize 10,000 beans
+- Talent Showcase (Exhibition): Entry Fee 0 beans, Participants 8/15, Duration 3 days, Prize Promotion opportunity
+- Team Challenge (Competition): Entry Fee 1000 beans, Participants 24/30, Duration 7 days, Prize 25,000 beans + sponsorship`;
+
+          case "growth":
+            return `Growth Strategies:
+- Focus on consistency, engaging with viewers, collaborating with other streamers, and cross-platform promotion.
+- Instagram: Post daily stories, weekly carousel posts, and use relevant hashtags.
+- TikTok: Create 3-5 short clips daily from your streams.
+- YouTube: Upload weekly highlight videos and monthly compilations.
+- Twitter: Tweet updates before going live and engage frequently.`;
+
+          case "sponsorship":
+            return `Sponsorship Tips:
+- Build a strong and engaged audience.
+- Network with streamers and industry professionals.
+- Create a professional media kit.
+- Reach out with personalized proposals.
+- Leverage social media platforms.
+- Participate in community events.
+- Maintain professionalism.
+- Offer unique sponsorship packages.`;
+
+          case "wishlist":
+            return `Wishlist Guide:
+- Set up an Amazon wishlist.
+- Share it on your stream.
+- Encourage donations for items you use during streams.`;
+
+          case "cross_promote":
+            return `Cross Promotion Tips:
+- Collaborate with other streamers.
+- Share content across platforms.
+- Engage with multiple communities to expand your reach.`;
+
+          case "loan_info":
+            return `Loan info is coming soon.`;
+
+          case "credit_score":
+            return `Everyone starts with a credit score of 0.`;
+
+          default:
+            return `Unknown command: ${command}`;
+        }
+      } else {
+        return `I'm Bean-Genie, your Bigo Live assistant bot. Try commands starting with ! like !convert or !track.`;
+      }
+    }
+
+    cliForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = cliInput.value.trim();
+      if (!input) return;
+
+      appendMessage(input, true);
+
+      if (input.toLowerCase() === "exit") {
+        appendMessage("Goodbye! Thank you for using Bean-Genie.");
+        cliInput.disabled = true;
+        cliForm.querySelector("button").disabled = true;
+        return;
+      }
+
+      setTimeout(() => {
+        const response = processCommand(input);
+        appendMessage(response);
+      }, 300);
+
+      cliInput.value = "";
+      cliInput.focus();
+    });
+
+    btnCommands.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const cmd = btn.getAttribute("data-cmd");
+        if (!cmd) return;
+
+        appendMessage(cmd, true);
+
+        if (cmd.toLowerCase() === "exit") {
+          appendMessage("Goodbye! Thank you for using Bean-Genie.");
+          cliInput.disabled = true;
+          cliForm.querySelector("button").disabled = true;
+          btnCommands.forEach((b) => (b.disabled = true));
+          return;
+        }
+
+        setTimeout(() => {
+          const response = processCommand(cmd);
+          appendMessage(response);
+        }, 300);
+
+        cliInput.value = "";
+        cliInput.focus();
+      });
+    });
+
+    appendMessage(
+      "Welcome to Bean-Genie CLI! Type a command starting with ! or use the buttons below. Type 'exit' to quit."
+    );
+  </script>
+ </body>
+</html>
