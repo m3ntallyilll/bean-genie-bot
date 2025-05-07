@@ -1,0 +1,6 @@
+Flask
+pydantic
+werkzeug
+python-dotenv
+groq
+gtts
