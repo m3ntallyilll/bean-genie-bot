@@ -1,0 +1,19 @@
+[
+  "test_app.py::test_bot_command_processing",
+  "test_app.py::test_chat_message",
+  "test_app.py::test_database_schema",
+  "test_app.py::test_frontend_pages",
+  "test_app.py::test_register_login_logout",
+  "test_app.py::test_restart_authorized",
+  "test_app.py::test_restart_unauthorized",
+  "test_bean_genie_bot.py::test_command_functions_keys",
+  "test_bean_genie_bot.py::test_convert_command_invalid_type",
+  "test_bean_genie_bot.py::test_convert_command_valid",
+  "test_bean_genie_bot.py::test_generate_tts",
+  "test_bean_genie_bot.py::test_get_events",
+  "test_bean_genie_bot.py::test_get_sponsorship_info",
+  "test_bean_genie_bot.py::test_process_command_known_command",
+  "test_bean_genie_bot.py::test_process_command_unknown_command",
+  "test_bean_genie_bot.py::test_track_command_invalid_args",
+  "test_bean_genie_bot.py::test_track_command_valid"
+]
